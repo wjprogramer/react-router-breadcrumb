@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { Home, Books, Electronics } from "../pages";
 import { Navbar } from '../components';
+import routes from '../routes';
 
 class App extends Component {
   render() {
     return (
       <div className="container">
         <Navbar />
-        
-        <Route path="/" exact component={Home} />
-        <Route path="/books" component={Books} />
-        <Route path="/electronics" component={Electronics} />
+
+        {routes.map((route, i) => {
+          const { path, exact, routes } = route;
+          return (
+            <Route
+              key={i}
+              path={path}
+              exact={exact}
+              render={(routeProps) => (
+                <route.component routes={routes} {...routeProps} />
+              )}
+            />
+          );
+        })}
       </div>
     );
   }
