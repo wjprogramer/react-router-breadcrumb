@@ -1,4 +1,6 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+const rootPath = process.env.PUBLIC_URL;
 
 /**
  * These are root pages
@@ -12,7 +14,15 @@ const Books = () => {
 };
 
 const Electronics = () => {
-  return <h1 className="py-3">Electronics</h1>;
+  return <>
+    <h1 className="py-3">Electronics</h1>
+    <Switch>
+      {/* The component will show here if the current URL matches the path */}
+      <Route path={`${rootPath}/electronics/mobile`} component={Mobile} />
+      <Route path={`${rootPath}/electronics/desktop`} component={Desktop} />
+      <Route path={`${rootPath}/electronics/laptop`} component={Laptop} />
+    </Switch>
+  </>;
 };
 
 /**
