@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from "react-router-dom"; 
-import { renderRoutes, matchRoutes } from 'react-router-config';
-import routes from "./routes";
+import { renderRoutes } from 'react-router-config';
+import { Breadcrumb } from "./components";
 
 /**
  * These are root pages
@@ -15,43 +14,26 @@ const Books = () => {
 };
 
 const Electronics = ({ route, location }) => {
-  let matchedRoutes = matchRoutes(routes, location.pathname);
-  
-  matchedRoutes = [
-    {
-      route: {
-        path: '/',
-        breadcrumbName: 'Home'
-      }
-    },
-    ...matchedRoutes
-  ];
+  // Provide a function as props into <Breadcrumb /> to modify breadcrumb
+  const onMatchedRoutes = (matchedRoutes) => {
+    return [
+      {
+        route: {
+          path: '/',
+          breadcrumbName: 'Home'
+        }
+      },
+      ...matchedRoutes
+    ];
+  };
 
   return <>
     <h1 className="py-3">Electronics</h1>
 
-    {/* Breadcrumb */}
-    <nav>
-      <ol className="breadcrumb">
-        {matchedRoutes.map((matchRoute, i) => {
-          const { path, breadcrumbName } = matchRoute.route;
-
-          // check whether the the path is the Page path user currently at
-          const isActive = path === location.pathname;
-  
-          // if the Page path is user currently at, then do not show <Link />
-          return isActive ? (
-            <li key={i} className="breadcrumb-item active">
-              {breadcrumbName}
-            </li>
-          ) : (
-            <li key={i} className="breadcrumb-item">
-              <Link to={path}>{breadcrumbName} </Link>
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
+    <Breadcrumb 
+      locationPath={location.pathname}
+      onMatchedRoutes={onMatchedRoutes}
+    />
 
     {renderRoutes(route.routes)}
   </>;
