@@ -25,7 +25,15 @@ const Electronics = ({ route, location }) => {
         {matchedRoutes.map((matchRoute, i) => {
           const { path, breadcrumbName } = matchRoute.route;
 
-          return (
+          // check whether the the path is the Page path user currently at
+          const isActive = path === location.pathname;
+  
+          // if the Page path is user currently at, then do not show <Link />
+          return isActive ? (
+            <li key={i} className="breadcrumb-item active">
+              {breadcrumbName}
+            </li>
+          ) : (
             <li key={i} className="breadcrumb-item">
               <Link to={path}>{breadcrumbName} </Link>
             </li>
