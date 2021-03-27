@@ -15,7 +15,18 @@ const Books = () => {
 };
 
 const Electronics = ({ route, location }) => {
-  const matchedRoutes = matchRoutes(routes, location.pathname);
+  let matchedRoutes = matchRoutes(routes, location.pathname);
+  
+  matchedRoutes = [
+    {
+      route: {
+        path: '/',
+        breadcrumbName: 'Home'
+      }
+    },
+    ...matchedRoutes
+  ];
+
   return <>
     <h1 className="py-3">Electronics</h1>
 
