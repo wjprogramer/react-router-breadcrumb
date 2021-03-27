@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
 import { Navbar } from '../components';
+import { renderRoutes } from 'react-router-config';
 import routes from '../routes';
 
 class App extends Component {
@@ -8,20 +8,7 @@ class App extends Component {
     return (
       <div className="container">
         <Navbar />
-
-        {routes.map((route, i) => {
-          const { path, exact, routes } = route;
-          return (
-            <Route
-              key={i}
-              path={path}
-              exact={exact}
-              render={(routeProps) => (
-                <route.component routes={routes} {...routeProps} />
-              )}
-            />
-          );
-        })}
+        {renderRoutes(routes)}
       </div>
     );
   }
