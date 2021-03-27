@@ -1,5 +1,7 @@
 import React from 'react';
-import { renderRoutes } from 'react-router-config';
+import { Link } from "react-router-dom"; 
+import { renderRoutes, matchRoutes } from 'react-router-config';
+import routes from "./routes";
 
 /**
  * These are root pages
@@ -12,9 +14,26 @@ const Books = () => {
   return <h1 className="py-3">Books</h1>;
 };
 
-const Electronics = ({ route }) => {
+const Electronics = ({ route, location }) => {
+  const matchedRoutes = matchRoutes(routes, location.pathname);
   return <>
     <h1 className="py-3">Electronics</h1>
+
+    {/* Breadcrumb */}
+    <nav>
+      <ol className="breadcrumb">
+        {matchedRoutes.map((matchRoute, i) => {
+          const { path, breadcrumbName } = matchRoute.route;
+
+          return (
+            <li key={i} className="breadcrumb-item">
+              <Link to={path}>{breadcrumbName} </Link>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+
     {renderRoutes(route.routes)}
   </>;
 };
